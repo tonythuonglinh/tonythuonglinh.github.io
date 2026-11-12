@@ -2,7 +2,12 @@ import React,{useEffect,useState,useRef} from 'react';
 import{createRoot}from'react-dom/client';
 import{ArrowLeft,KeyRound,LockKeyhole,Heart,CalendarDays}from'lucide-react';
 import './style.css';
-const assetUrl=path=>`${import.meta.env.BASE_URL}${path.replace(/^\//,'')}`;
+const images=import.meta.glob('./assets/*',{eager:true,query:'?url',import:'default'});
+const assetUrl=path=>{
+ const url=images[`./assets/${path.replace(/^\//,'')}`];
+ if(!url)throw new Error(`Missing image: ${path}`);
+ return url;
+};
 function isTrophyMoment(value){
  const words=value.toLowerCase().normalize('NFKD').replace(/[^a-z\s]/g,' ').split(/\s+/).filter(Boolean);
  // Accept the requested short answers as well as small spelling mistakes.
