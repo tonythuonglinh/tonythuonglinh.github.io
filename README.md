@@ -20,21 +20,26 @@ npm run preview
 
 ## Publish on GitHub Pages
 
-1. Create a GitHub repository and push this project to its `main` branch. Include
-   `assets/`, `package-lock.json`, and `.github/workflows/deploy.yml`; exclude
-   `node_modules/` and `dist/` (already covered by `.gitignore`).
-2. In the repository, open **Settings → Pages**. Under **Build and deployment**,
-   set **Source** to **GitHub Actions**.
-3. Open **Actions → Deploy to GitHub Pages → Run workflow**, or push a change to
-   `main`. The workflow builds and publishes `dist/` automatically.
-4. Find the published URL in **Settings → Pages** or the deployment run.
+Pages serves the committed `docs/` folder directly from `main`.
+There is no custom GitHub Actions workflow.
 
-The default URL is `https://USERNAME.github.io/REPOSITORY/`. Relative asset paths
-also support a `USERNAME.github.io` repository or a custom domain without changing
-the Vite configuration. No backend or environment secrets are required.
+In Settings > Pages, select **Deploy from a branch**, then **main** and **/docs**.
+The site is published at https://tonythuonglinh.github.io/.
 
-GitHub Pages publishes the site to the web, including its personal messages. Quiz
-answers are checked in the browser and do not provide access protection.
+After editing the source, rebuild before committing and pushing:
 
-GIFs and photos are bundled from `assets/` by Vite. The Pentakill clip uses a YouTube embed
-and includes a link to watch it directly if playback is blocked.
+```sh
+npm run build
+git add src.jsx style.css assets docs
+git commit -m "Update quiz"
+git push origin main
+```
+
+Commit `docs/` including its generated assets. Do not commit `node_modules/`.
+`npm run preview` serves the built `docs/` version locally.
+
+GitHub Pages publishes the site to the web, including its personal messages.
+Quiz answers are checked in the browser and do not provide access protection.
+
+GIFs and photos are bundled from `assets/` by Vite. The Pentakill clip uses a
+YouTube embed and includes a direct link if playback is blocked.
